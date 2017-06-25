@@ -6,4 +6,6 @@ if(isset($_GET['remove_contact']) && $_GET['remove_contact'] == 'true'){
     mysqli_query($link, $query);
     echo $contact_id;
     header("Location: index.php");
+}else{
+    header('Location: index.php');
 }

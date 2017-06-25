@@ -15,6 +15,12 @@
                 display: none;
                 padding: 20px 0;
             }
+            .text-center{
+                text-align: center;
+            }
+            b{
+                text-transform: uppercase;
+            }
         </style>
         <?php
         include_once 'database.php';
@@ -49,24 +55,32 @@
                                         <?php
                                         $query = "SELECT * FROM contacts";
                                         $query_result = mysqli_query($link, $query);
-                                        while ($result = mysqli_fetch_object($query_result)) {
-                                            $group_id = $result->group_id;
-                                            $group_query = "SELECT group_name FROM groups WHERE id = {$group_id}";
-                                            $group_query_result = mysqli_query($link, $group_query);
-                                            $group_result = mysqli_fetch_object($group_query_result);
-                                            $group_name = $group_result->group_name;
-                                            mysqli_free_result($group_query_result);
+                                        if ($query_result->num_rows !== 0) {
+                                            while ($result = mysqli_fetch_object($query_result)) {
+                                                $group_id = $result->group_id;
+                                                $group_query = "SELECT group_name FROM groups WHERE id = {$group_id}";
+                                                $group_query_result = mysqli_query($link, $group_query);
+                                                $group_result = mysqli_fetch_object($group_query_result);
+                                                $group_name = $group_result->group_name;
+                                                mysqli_free_result($group_query_result);
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $result->first_name; ?></td>
+                                                    <td><?php echo $result->last_name; ?></td>
+                                                    <td><?php echo $result->phone_number; ?></td>
+                                                    <td><?php echo $group_name; ?></td>
+                                                    <td><a href="removeContact.php?remove_contact=true&contact_id=<?php echo $result->id; ?>" title="">remove</a> | <a href="editContact.php?edit_contact=true&contact_id=<?php echo $result->id; ?>" title="">Edit</a></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                            mysqli_free_result($query_result);
+                                        } else {
                                             ?>
-                                            <tr>
-                                                <td><?php echo $result->first_name; ?></td>
-                                                <td><?php echo $result->last_name; ?></td>
-                                                <td><?php echo $result->phone_number; ?></td>
-                                                <td><?php echo $group_name; ?></td>
-                                                <td><a href="removeContact.php?remove_contact=true&contact_id=<?php echo $result->id; ?>" title="">remove</a> | <a href="editContact.php?edit_contact=true&contact_id=<?php echo $result->id; ?>" title="">Edit</a></td>
+                                            <tr class="text-center">
+                                                <td colspan="5"><b>No contact was founded</b></td>
                                             </tr>
                                             <?php
                                         }
-                                        mysqli_free_result($query_result);
                                         ?>
 
                                     </tbody>
@@ -87,7 +101,7 @@
                                         <input id="pnumber" name="pnumber" class="form-control" placeholder="Enter contact's phone" type="text">
                                     </div>
                                     <div class="form-group">
-                                        <label for="group">Group</label>
+                                        <label for="group">Group*</label>
                                         <select class="form-control" id="group" name="group">
                                             <option disabled selected >Select GroupName...</option>
                                             <?php
@@ -112,10 +126,14 @@
                                 </form>
                             </div><!--.nav-content-->
                             <div class="nav-content" id="phoneSearch">
-                                <form action="" role="form">
+                                <form action="searchContact.php" method="post" role="form">
                                     <div class="form-group">
                                         <label for="fname">First name</label>
-                                        <input id="fname" class="form-control" placeholder="Enter contact's first name" type="text">
+                                        <input id="fname" name="fname" class="form-control" placeholder="Enter contact's first name" type="text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lname">Last name</label>
+                                        <input id="lname" name="lname" class="form-control" placeholder="Enter contact's last name" type="text">
                                     </div>
                                     <div class="form-group">
                                         <label for="group">Group</label>
@@ -130,7 +148,7 @@
                                             ?>
                                         </select><!--#group-->
                                     </div>
-                                    <input class="btn btn-default" type="submit" value="Search">
+                                    <input class="btn btn-default" name="search_contact" type="submit" value="Search">
                                 </form>
                             </div><!--.nav-content-->
                         </div><!--.panel-body-->
