@@ -1,9 +1,9 @@
 <?php
 include_once 'database.php';
 if (isset($_POST['search_contact'])) {
-    if(isset($_POST['group'])) $group = $_POST['group'];
-    if(isset($_POST['fname'])) $fname = $_POST['fname'];
-    if(isset($_POST['lname'])) $lname = $_POST['lname'];
+    if(isset($_POST['group'])) mysqli_real_escape_string($link , strip_tags(htmlspecialchars($group = $_POST['group'])));
+    if(isset($_POST['fname'])) mysqli_real_escape_string($link , strip_tags(htmlspecialchars($fname = $_POST['fname'])));
+    if(isset($_POST['lname'])) mysqli_real_escape_string($link , strip_tags(htmlspecialchars($lname = $_POST['lname'])));
     ?>
     <!DOCTYPE html>
     <html>

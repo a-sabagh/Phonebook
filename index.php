@@ -37,7 +37,8 @@
                             <ul class="nav nav-tabs">
                                 <li><a href="#phoneList">phoneList</a></li>
                                 <li><a href="#phoneAdd">phoneAdd</a></li>
-                                <li><a href="#phoneGroup">phoneGroup</a></li>
+                                <li><a href="#GroupList">GroupList</a></li>
+                                <li><a href="#addGroup">GroupAdd</a></li>
                                 <li><a href="#phoneSearch">phoneSearch</a></li>
                             </ul><!--.nav-tabs-->
                             <div class="nav-content" id="phoneList">
@@ -116,13 +117,42 @@
                                     <input name="add_contact" class="btn btn-default" type="submit" value="Add Contact">
                                 </form>
                             </div><!--.nav-content-->
-                            <div class="nav-content" id="phoneGroup">
+                            <div class="nav-content" id="GroupList">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Group name</th>
+                                            <th>Contact group</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $query = "SELECT * FROM groups";
+                                        $query_result = mysqli_query($link, $query);
+                                        while ($row_obj = mysqli_fetch_object($query_result)) {
+                                            $group_id = $row_obj->id;
+                                            $contact_query = "SELECT id FROM contacts WHERE group_id={$group_id}";
+                                            $result = mysqli_query($link, $contact_query);
+                                            ?>
+                                            <tr>
+                                                <td><?php echo $row_obj->group_name; ?></td>
+                                                <td><?php echo $result->num_rows; ?></td>
+                                                <td><a href="removeGroup.php?remove_group=true&group_id=<?php echo $row_obj->id; ?>" title="remove group">Remove</a> | <a href="editGroup.php?edit_group=true&group_id=<?php echo $row_obj->id; ?>" title="edit group">Edit</a></td>
+                                            </tr>    
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div><!--#GroupList-->
+                            <div class="nav-content" id="addGroup">
                                 <form action="addGroup.php" method="post" role="form">
                                     <div class="form-group">
                                         <label for="group-add">Group name</label>
                                         <input id="group-add" class="form-control" name="group" placeholder="Enter group name" type="text">
                                     </div>
-                                    <input class="btn btn-default" type="submit" name="add_group" value="Add Contact">
+                                    <input class="btn btn-default" type="submit" name="add_group" value="Add Group">
                                 </form>
                             </div><!--.nav-content-->
                             <div class="nav-content" id="phoneSearch">
