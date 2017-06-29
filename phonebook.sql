@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 25, 2017 at 08:30 
+-- Generation Time: Jun 29, 2017 at 08:30 
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -31,7 +31,7 @@ CREATE TABLE `contacts` (
   `first_name` varchar(32) DEFAULT NULL,
   `last_name` varchar(32) DEFAULT NULL,
   `phone_number` varchar(32) DEFAULT NULL,
-  `group_id` int(2) NOT NULL
+  `group_id` int(2) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -43,6 +43,21 @@ CREATE TABLE `contacts` (
 CREATE TABLE `groups` (
   `id` int(2) NOT NULL,
   `group_name` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(1) NOT NULL,
+  `username` varchar(32) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `identifier` varchar(256) DEFAULT NULL,
+  `ip` varchar(32) DEFAULT NULL,
+  `last_login` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -63,6 +78,13 @@ ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -70,12 +92,17 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
