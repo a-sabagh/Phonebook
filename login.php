@@ -1,5 +1,5 @@
 <?php
-
+include_once 'admin-setup/config.php';
 session_start();
 include_once 'database.php';
 
@@ -11,7 +11,7 @@ function is_login() {
     if (isset($_COOKIE['user_identifier']) && isset($_COOKIE['username'])) {
         $username = $_COOKIE['username'];
         $user_identifier = $_COOKIE['user_identifier'];
-        $dbh = new PDO("mysql:host=localhost;dbname=phonebook", 'root', '');
+        $dbh = new PDO("mysql:host=" . HOST . ";dbname=" . DB , USER , PASSWORD);
         $query = "SELECT * FROM users WHERE username=:username";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(":username", $username , PDO::PARAM_STR);
@@ -41,7 +41,7 @@ function is_login() {
  * @param type $remember
  */
 function do_login($username, $password, $remember) {
-    $dbh = new PDO("mysql:host=localhost;dbname=phonebook", 'root', '');
+    $dbh = new PDO("mysql:host=" . HOST . ";dbname=" . DB , USER , PASSWORD);
     $query = "SELECT * FROM users WHERE username=:username";
     $stmt = $dbh->prepare($query);
     $stmt->bindParam(":username", $username, PDO::PARAM_STR);

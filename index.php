@@ -26,7 +26,7 @@
             }
         </style>
         <?php
-        include_once 'admin-setup/loader.php';
+        include_once 'admin-setup/setup.php';
         include_once 'database.php';
         include_once 'login.php';
         ?>
@@ -146,16 +146,26 @@
                                             <?php
                                             $query = "SELECT * FROM groups";
                                             $query_result = mysqli_query($link, $query);
-                                            while ($row_obj = mysqli_fetch_object($query_result)) {
-                                                $group_id = $row_obj->id;
-                                                $contact_query = "SELECT id FROM contacts WHERE group_id={$group_id}";
-                                                $result = mysqli_query($link, $contact_query);
+                                            if ($query_result->num_rows) {
+                                                //have group
+                                                while ($row_obj = mysqli_fetch_object($query_result)) {
+                                                    $group_id = $row_obj->id;
+                                                    $contact_query = "SELECT id FROM contacts WHERE group_id={$group_id}";
+                                                    $result = mysqli_query($link, $contact_query);
+                                                    ?>
+                                                    <tr>
+                                                        <td><?php echo $row_obj->group_name; ?></td>
+                                                        <td><?php echo $result->num_rows; ?></td>
+                                                        <td><a href="removeGroup.php?remove_group=true&group_id=<?php echo $row_obj->id; ?>" title="remove group">Remove</a> | <a href="editGroup.php?edit_group=true&group_id=<?php echo $row_obj->id; ?>" title="edit group">Edit</a></td>
+                                                    </tr>    
+                                                    <?php
+                                                }
+                                            } else {
+                                                //have'nt group
                                                 ?>
-                                                <tr>
-                                                    <td><?php echo $row_obj->group_name; ?></td>
-                                                    <td><?php echo $result->num_rows; ?></td>
-                                                    <td><a href="removeGroup.php?remove_group=true&group_id=<?php echo $row_obj->id; ?>" title="remove group">Remove</a> | <a href="editGroup.php?edit_group=true&group_id=<?php echo $row_obj->id; ?>" title="edit group">Edit</a></td>
-                                                </tr>    
+                                                <tr class="text-center">
+                                                    <td colspan="3"><b>No group was founded</b></td>
+                                                </tr>
                                                 <?php
                                             }
                                             ?>
