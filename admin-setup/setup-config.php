@@ -43,7 +43,7 @@ if(isset($_POST['setup_config'])){
             <br><br><br>
             <h2 class="text-center">DataBase Details</h2><br>
             <div class="jumbotron">
-                <span>below you must enter your database details.if you not sure about this,contact your host:</span><br>
+                <span>Please Enter Your Host Information to Run Phonebook.</span><br>
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-md-offset-1 col-md-3"><b>Database Name :</b></div>

@@ -64,7 +64,7 @@ if (isset($_POST['setup_user']) && file_exists("config.php")) {
                         </div><br>
                     </div>
                     <div class="row">
-                        <div class="col-md-offset-1 col-md-3"><b>Username :</b></div>
+                        <div class="col-md-offset-1 col-md-3"><b>Password :</b></div>
                         <div class="col-md-7">
                             <input id="fname" name="password" class="form-control" type="text">
                         </div><br>

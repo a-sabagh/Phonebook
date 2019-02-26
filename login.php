@@ -1,5 +1,4 @@
 <?php
-include_once 'admin-setup/config.php';
 session_start();
 include_once 'database.php';
 
@@ -78,7 +77,11 @@ function do_login($username, $password, $remember) {
 if (isset($_POST['login'])) {
     $username = trim(strip_tags($_POST['username']));
     $password = trim(strip_tags($_POST['password']));
-    $remember = ($_POST['remember'] == 'on') ? TRUE : FALSE;
+    if(isset($_POST['remember']) and $_POST['remember'] == 'on'){
+		$remember = true;
+	}else{
+		$remember = false;
+	}
     do_login($username, $password, $remember);
 }
 if (isset($_GET['logged_out']) && $_GET['logged_out'] == 'true') {
